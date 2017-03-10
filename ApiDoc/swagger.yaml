@@ -3,5 +3,154 @@ info:
   version: '1.0.0'
   title: 'Idea-Wall API'
   description: 'Dies ist die API für die Software-Design Hausarbeit'
-  
-paths: {}
+
+# tags are used for organizing operations
+tags: #Rausnehmen?
+- name: admins
+  description: "Zugang nur Administratoren"
+- name: developers
+  description: "Zugang für FE-Entwickler"
+paths:
+  /idea:
+        post:
+          tags:
+          - developers
+          summary: Fügt eine Idea der Wall hinzu
+          operationId: create
+          description: Fügt eine Idee der Wall hinzu
+          consumes:
+          - application/json
+          parameters:
+          - in: body
+            name: idea
+            required: true
+            description: Die zu erstellende Idee
+            schema:
+              type: object
+              required:
+              - titel
+              - description
+              properties:
+                titel:
+                  type: string
+                  example: "Mehr Kaffe"
+                description:
+                  type: string
+                  example: "Wir brauchen mehr Kaffe in der Küche"
+          produces:
+          - application/json
+          responses:
+            201:
+              description: Die Idee wurde erfolgreich erstellt
+              schema:
+                type: object
+                required:
+                - id
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+            400:
+              description: Ungültiger Input, die Idee konnte nicht erstellt werden
+            # Darf man auch als nicht angemeldeter Nutzer Idee sehen?
+  /idea/{id}:
+        get:
+          tags:
+          - developers
+          summary: Zeigt die Idee mit der angegebenen ID an
+          description: Zeigt die Idee mit der angegebenen ID an
+          consumes:
+          - application/json
+          parameters:
+          - in: path
+            name: id
+            type: integer
+            required: true
+            description: Der ID der zu löschenden Idee
+          produces:
+          - application/json
+          responses:
+            200:
+              description: Die angebene Idee konnte gefunden werden
+              schema:
+                type: object
+                required:
+                - titel
+                - description
+                - status
+                - numberOfRatings
+                - sumOfAllRatings
+                - comments
+                properties:
+                  titel:
+                    type: string
+                    example: "Mehr Kaffe"
+                  description:
+                    type: string
+                    example: "Wir brauchen mehr Kaffe in der Küche"
+                  status:
+                    type: integer
+                    example: 2
+                  numberOfRatings:
+                    type: integer
+                    minimum: 0
+                    example: 12
+                  sumOfAllRatings:
+                    type: number
+                    minimum: 0
+                    maximum: 5
+                    example: 3,8
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - ID
+                      - author
+                      - text
+                      properties:
+                        ID:
+                          type: integer
+                          example: 1
+                        author:
+                          type: string
+                          example: Max Mustermann
+                        text:
+                          type: string
+                          example: Ich stimme zu!
+                    #Wie füge ich ein zweites Beispiel hinzu?
+            404:
+              description: Doe angegebene Idee kann nicht gefunden werden.
+        delete:
+          tags:
+          - developers
+          summary: Die Idee mit der angegebenen ID wird gelöscht
+          operationId: delete
+          description: Die Idee mit der angegebenen ID wird gelöscht
+          consumes:
+          - application/json
+          parameters:
+          - in: path
+            name: id
+            type: integer
+            required: true
+            description: Der ID der zu löschenden Idee
+          produces:
+          - application/json
+          responses:
+            200:
+              description: Die Idee mit der angebenen Id konnte erfolgreich gelöscht werden.
+              schema:
+                type: object
+                required:
+                - id
+                properties:
+                  id:
+                    type: integer
+                    example: "1"
+            401:
+              description: Die ausgewählte Idee kann nicht gelöscht werde, da der Nutzer nicht angemeldet ist.
+            403:
+              description: Die ausgewählte Idee kann nicht gelöscht werde, da sie von jemand anderem als dem angemeldeten Nutzer erstellt wurde.
+            404:
+              description: Doe angegebene Idee kann nicht gefunden werden.
