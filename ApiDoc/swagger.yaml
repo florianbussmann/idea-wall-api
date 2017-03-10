@@ -99,7 +99,7 @@ paths:
                     type: number
                     minimum: 0
                     maximum: 5
-                    example: 3,8
+                    example: 3.8
                   comments:
                     type: array
                     items:
@@ -114,11 +114,10 @@ paths:
                           example: 1
                         author:
                           type: string
-                          example: Max Mustermann
+                          example: "Max Mustermann"
                         text:
                           type: string
-                          example: Ich stimme zu!
-                    #Wie füge ich ein zweites Beispiel hinzu?
+                          example: "Ich stimme zu!"
             404:
               description: Doe angegebene Idee kann nicht gefunden werden.
         delete:
@@ -207,7 +206,7 @@ paths:
                           type: number
                           minimum: 0
                           maximum: 5
-                          example: 3,8
+                          example: 3.8
                         comments:
                           type: array
                           items:
@@ -229,4 +228,4 @@ paths:
             204:
               description: Der angegebene Nutzer existiert, hat aber bislang noch keine Ideen veröffentlicht.
             404:
-              description: Es existiert kein Benutzer mit der angegebenen Benutzerkennung.
+                description: Es existiert kein Benutzer mit der angegebenen Benutzerkennung.
