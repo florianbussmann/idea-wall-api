@@ -15,7 +15,7 @@ paths:
         post:
           tags:
           - developers
-          summary: Fügt eine Idea der Wall hinzu
+          summary: 1 Fügt eine Idea der Wall hinzu
           operationId: create
           description: Fügt eine Idee der Wall hinzu
           consumes:
@@ -57,7 +57,7 @@ paths:
         get:
           tags:
           - developers
-          summary: Zeigt die Idee mit der angegebenen ID an
+          summary: 3 Zeigt die Idee mit der angegebenen ID an
           description: Zeigt die Idee mit der angegebenen ID an
           consumes:
           - application/json
@@ -124,7 +124,7 @@ paths:
         delete:
           tags:
           - developers
-          summary: Die Idee mit der angegebenen ID wird gelöscht
+          summary: 2 Die Idee mit der angegebenen ID wird gelöscht
           operationId: delete
           description: Die Idee mit der angegebenen ID wird gelöscht
           consumes:
@@ -153,4 +153,80 @@ paths:
             403:
               description: Die ausgewählte Idee kann nicht gelöscht werde, da sie von jemand anderem als dem angemeldeten Nutzer erstellt wurde.
             404:
-              description: Doe angegebene Idee kann nicht gefunden werden.
+              description: Die angegebene Idee kann nicht gefunden werden.
+  /ideas/{userId}:
+        get:
+          tags:
+          - developers
+          summary: 8 Zeigt die Ideen eines bestimmten Benutzers an
+          description: Zeigt die Ideen eines bestimmten Benutzers an
+          consumes:
+          - application/json
+          parameters:
+          - in: path
+            name: userId
+            type: integer
+            required: true
+            description: Die Benutzerkennung
+          produces:
+          - application/json
+          responses:
+            200:
+              description: Der angegebene Nutzer existiert und hat bereits Ideen veröffentlicht.
+              schema:
+                type: object
+                required:
+                - ideas
+                properties:
+                  ideas:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - titel
+                      - description
+                      - status
+                      - numberOfRatings
+                      - sumOfAllRatings
+                      - comments
+                      properties:
+                        titel:
+                          type: string
+                          example: "Mehr Kaffe"
+                        description:
+                          type: string
+                          example: "Wir brauchen mehr Kaffe in der Küche"
+                        status:
+                          type: integer
+                          example: 2
+                        numberOfRatings:
+                          type: integer
+                          minimum: 0
+                          example: 12
+                        sumOfAllRatings:
+                          type: number
+                          minimum: 0
+                          maximum: 5
+                          example: 3,8
+                        comments:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - ID
+                            - author
+                            - text
+                            properties:
+                              ID:
+                                type: integer
+                                example: 1
+                              author:
+                                type: string
+                                example: Max Mustermann
+                              text:
+                                type: string
+                                example: Ich stimme zu!
+            204:
+              description: Der angegebene Nutzer existiert, hat aber bislang noch keine Ideen veröffentlicht.
+            404:
+              description: Es existiert kein Benutzer mit der angegebenen Benutzerkennung.
