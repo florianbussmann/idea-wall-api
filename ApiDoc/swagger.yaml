@@ -534,4 +534,3 @@ paths:
           description: Der übergebene Benutzer hat die Idee mit der angegebenen ID bereits bewertet. Jeder Nutzer darf eine Idee nur jeweils einmal bewerten.
         404:
           description: Unter der angegebenen ID konnte keine Idee gefunden werden
-                
