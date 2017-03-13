@@ -631,3 +631,60 @@ paths:
           description: Die gewünschte Aktion konnte nicht durchgeführt werden, da der Status nur vom Autor der Idee geändert werden kann.
         404:
           description: Es existiert keine Idee mit der angegebenen Idee.
+  /signup:
+    post:
+      tags:
+      - developers
+      summary: 7 Anlegen einr neuen Benutzer-Registrierung
+      operationId: signup
+      description: Die Daten für einen neuen Benutzer werden registriert.
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: Die gewünschten Benutzerdaten
+        required: true
+        schema:
+          type: object
+          required:
+          - name
+          - pwd
+          properties:
+            name:
+              type: string
+              description: Benutzername
+              example: "reinhold"
+            pwd:
+              type: string
+              description: Geheimes Passwort
+              example: "123456"
+      produces: 
+      - application/json
+      responses:
+        # Wird die ID benötigt? Sonst Status 204 - keine Daten zurücksenden
+        200:
+          description: Der Benutzer wurde erfolgreich angelegt.
+          schema:
+            type: object
+            description: Der angelegte Benutzer
+            required:
+            - id
+            - name
+            - pwd
+            properties:
+              id:
+                type: integer
+                description: Benutzerkennung
+                example: 1
+              name:
+                type: string
+                description: Benutzername
+                example: "reinhold"
+              pwd:
+                type: string
+                description: Geheimes Passwort
+                example: "123456"
+        # Ist das der richtige Statuscode?
+        409:
+          description: Die Aktion konnte nicht durchgeführt werden, da der gewünschte Benutzername bereits vergeben ist.
