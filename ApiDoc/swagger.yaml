@@ -534,3 +534,100 @@ paths:
           description: Der übergebene Benutzer hat die Idee mit der angegebenen ID bereits bewertet. Jeder Nutzer darf eine Idee nur jeweils einmal bewerten.
         404:
           description: Unter der angegebenen ID konnte keine Idee gefunden werden
+  /idea/{id}/status:
+    post:
+      tags:
+      - developers
+      summary: 9 Status einer Idee setzen
+      operationId: change status
+      description: Der Idee wird ein Status zugeordnet.
+      consumes:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: Die ID der zu ändernden Idee
+      - in: body
+        name: status
+        # Als int mit Mapping oder eigenes Statusmodell?
+        description: Der zu setzende Status
+        required: true
+        schema:
+          type: object
+          required:
+          - status
+          properties:
+            status:
+              type: integer
+              description: Die ID des Status
+              example: 3
+      produces: 
+      - application/json
+      responses:
+        200:
+          description: Der Status wurde erfolgreich gesetzt.
+          schema:
+            type: object
+            description: Die geänderte Idee
+            required:
+            - titel
+            - description
+            - status
+            - numberOfRatings
+            - sumOfAllRatings
+            - comments
+            properties:
+              titel:
+                type: string
+                description: Der Titel der Idee
+                example: "Mehr Kaffee und Tee"
+              description:
+                type: string
+                description: Die Beschreibung der Idee
+                example: "Wir brauchen mehr Kaffee und Tee in der Küche"
+              status:
+                # sollte das nicht der Einfachheit halber ein String sein?
+                type: integer
+                description: Der Statuscode der Idee
+                example: 3
+              numberOfRatings:
+                type: integer
+                description: Die Anzahl der bisher abgegebenen Bewertungen für diese Idee
+                minimum: 0
+                example: 12
+              sumOfAllRatings:
+                type: number
+                description: Die durchschnittliche Bewertung der Idee als Zahl zwischen 0 und 5 (Sternen)
+                minimum: 0
+                maximum: 5
+                example: 3.8
+              comments:
+                type: array
+                description: Alle bisher abgegebenen Kommentare zu der Idee
+                items:
+                  type: object
+                  required:
+                  - ID
+                  - author
+                  - text
+                  properties:
+                    ID:
+                      type: integer
+                      description: Die ID des Kommentars
+                      example: 1
+                    author:
+                      type: string
+                      description: Der Autor des Kommentars
+                      example: "Max Mustermann"
+                    text:
+                      type: string
+                      description: Der Text des Kommentars
+                      example: "Ich stimme zu!"
+        401:
+          description: Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist.
+        403:
+          description: Die gewünschte Aktion konnte nicht durchgeführt werden, da der Status nur vom Autor der Idee geändert werden kann.
+        404:
+          description: Es existiert keine Idee mit der angegebenen Idee.
