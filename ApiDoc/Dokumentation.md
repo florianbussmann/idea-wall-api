@@ -41,22 +41,22 @@ Neben den explizit geforderten Anforderungen in den User Stories sind im Rahmen 
 Eine umfassende Gegenüberstellung der verschiedenen HTTP-Verben und deren Verwendung für die definierten Endpunkte ist in der untenstehenden Tabelle vorgenommen worden.
 
 ## Tabelle 1: Verwendung der HTTP-Verben
-|Request-URI                             |  GET                            | POST  	             | PUT  	           | DELETE  	         |
-|---	                                 | ---	                           | ---	             | ---	               | ---    	         |
-|{version}/idea                          | 405                             | `siehe Swagger (1)` |  405                |  405                |
-|{version}/idea/{id} 	                 | `siehe Swagger (3)`             | 405                 | `siehe Swagger (4)` | `siehe Swagger (2)` |
-|{version}/idea/{id}/comment	         | 405                             | `siehe Swagger (5)` |  405                | 405                 |
-|{version}/idea/{id}/comment/{commentId} | 405                             | 405     	         | *Kommentar ändern*  | *Kommentar löschen* |
-|{version}/idea/{id}/rating 	         | 405                             | `siehe Swagger (6)` | 405                 | 405                 |
-|{version}/idea/{id}/status 	         | 405                             | 405                 | `siehe Swagger (9)` | 405                 |
-|{version}/ideas                         | *Liste aller Ideen*             | 405                 | 405                 | 405                 |
-|{version}/ideas/{userId}	             | `siehe Swagger (8)`             | 405                 | 405                 | 405                 |
-|{version}/signin 	                     | 405                             | *Anmeldung*         | 405                 | 405                 |
-|{version}/signup 	                     | 405                             | `siehe Swagger (7)` | 405                 | 405                 |
+| Request-URI                             |  GET                            | POST  	          | PUT  	            | DELETE  	          |
+| ---                                     | ---                             | ---                 | ---                 | ---                 |
+| {version}/idea                          | 405                             | `siehe Swagger (1)` |  405                |  405                |
+| {version}/idea/{id} 	                  | `siehe Swagger (3)`             | 405                 | `siehe Swagger (4)` | `siehe Swagger (2)` |
+| {version}/idea/{id}/comment	          | 405                             | `siehe Swagger (5)` |  405                | 405                 |
+| {version}/idea/{id}/comment/{commentId} | 405                             | 405     	          | *Kommentar ändern*  | *Kommentar löschen* |
+| {version}/idea/{id}/rating 	          | 405                             | `siehe Swagger (6)` | 405                 | 405                 |
+| {version}/idea/{id}/status 	          | 405                             | 405                 | `siehe Swagger (9)` | 405                 |
+| {version}/ideas                         | *Liste aller Ideen*             | 405                 | 405                 | 405                 |
+| {version}/ideas/{userId}	              | `siehe Swagger (8)`             | 405                 | 405                 | 405                 |
+| {version}/signin 	                      | 405                             | *Anmeldung*         | 405                 | 405                 |
+| {version}/signup 	                      | 405                             | `siehe Swagger (7)` | 405                 | 405                 |
 
 ## Legende
-|Eintrag                | Beschreibung                                                                                |
-|---	                | ---                                                                                         |
-|HTTP-Statuscode 405    | Method not allowed : Die angefragte Methode ist nicht definiert und wird nicht unterstützt. |
-|*Kursiver Text*        | Sinnvolle Methode, da jedoch nicht in den User-Stories nicht weiter definiert.              |
-|`Hervorgehobener Text` | Methode gemäß User-Stories (Nummer in Klammern), siehe Dokumentation der API in Swagger	  |
+| Eintrag                | Beschreibung                                                                                |
+| ---                    | ---                                                                                         |
+| HTTP-Statuscode 405    | Method not allowed : Die angefragte Methode ist nicht definiert und wird nicht unterstützt. |
+| *Kursiver Text*        | Sinnvolle Methode, da jedoch nicht in den User-Stories nicht weiter definiert.              |
+| `Hervorgehobener Text` | Methode gemäß User-Stories (Nummer in Klammern), siehe Dokumentation der API in Swagger	   |
