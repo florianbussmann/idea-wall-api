@@ -570,7 +570,7 @@ paths:
     post:
       summary: "6 Bewerten einer Idee"
       operationId: create rating
-      description: "Die Bewertung wird gespeichert und mit der Idee mit der angegebenen ID verbunden."
+      description: "Die Bewertung wird gespeichert und mit der Idee mit der angegebenen ID verbunden. Wenn der angemeldete Nutzer die Idee bereits bewertet hat, wird seine vorhandene Bewertung geändert."
       consumes:
       - application/json
       parameters:
@@ -578,7 +578,7 @@ paths:
         name: id
         type: integer
         required: true
-        description: "Die ID der zu ändernden Idee"
+        description: "Die ID der zu bewertenden Idee"
       - in: body
         name: rating
         required: true
@@ -602,7 +602,7 @@ paths:
       - application/json
       responses:
         200:
-          description: "Die Bewertung wurde erfolgreich gespeichert."
+          description: "Die Bewertung wurde erfolgreich gespeichert bzw. geändert."
           schema:
             type: object
             description: "Die geänderte Idee"
@@ -698,8 +698,6 @@ paths:
                       example: "Ich stimme zu!"
         401:
           description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist."
-        403:
-          description: "Der übergebene Benutzer hat die Idee mit der angegebenen ID bereits bewertet. Jeder Nutzer darf eine Idee nur jeweils einmal bewerten."
         404:
           description: "Unter der angegebenen ID konnte keine Idee gefunden werden."
   /{version}/idea/{id}/status:
