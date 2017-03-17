@@ -3,7 +3,7 @@ Für den Entwurf des Backend APIs wurde das Framework Swagger eingesetzt. Die De
 
 # Dokumentation der Design-Entscheidungen
 ## Authentifizierung und Autorisierung
-Zum Einsehen von Ideen ist keine Autorisierung erforderlich. Daher muss bei der entsprechenden Methode (**GET**-Request auf **idea/{id}** keine Autorisierung erfolgen. Für weitere Operationen, etwa das Hinzufügen einer Idee, muss der Benutzer angemeldet sein. An den Stellen, an denen ein Passwort des Nutzers übertragen werden muss, erfolgt dies gehasht, damit keine Passwörter im Klartext abgehört werden können.
+Zum Einsehen von Ideen ist keine Autorisierung erforderlich. Daher muss bei der entsprechenden Methode (**GET**-Request auf **/idea/{id}** keine Autorisierung erfolgen. Für weitere Operationen, etwa das Hinzufügen einer Idee, muss der Benutzer angemeldet sein. An den Stellen, an denen ein Passwort des Nutzers übertragen werden muss, erfolgt dies gehasht, damit keine Passwörter im Klartext abgehört werden können.
 Zur Authentifizierung bei den Ressourcen, die diese benötigen, wird Basic Authentication genutzt. Existiert noch keine authorisierte Session, antworten die entsprechenden Methoden der API mit dem HTTP-Statuscode 401 („Unauthorized“) und verlangen somit vom Client zunächst eine Authentifizerung. Werden diese in der Folge korrekt übergeben oder waren von Beginn an in den Request-Daten vorhanden, wird die ursprünglich angefragte Operation durchgeführt.
 
 ## Responses
@@ -12,7 +12,7 @@ Um die Anzahl der Requests gegen die Idea-Wall-API zu verringern, wird beim Ver�
 ## POST vs. PUT
 Die Methoden **POST** und **PUT** werden innerhalb der API einheitlich gemäß der [W3C-Definition](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) verwendet. Das Hinzufügen einer Ressource (Idee, Kommentar, Bewertung) erfolgt über eine andere URL als das spätere Bearbeiten. Dabei wird über die erste URL, die nicht spezifisch auf eine bestimmte Ressource hindeutet, nur die **POST**-Operation zum Hinzufügen verwendet. Die Ressource wird dann unter einer eigenen URL angelegt, die die im Backend generierte ID der Ressource enthält. Über diese kann sie später mit **PUT**-Requests geändert werden. **POST**-Requests auf die Ressourcen-spezifischen URLs sind nicht möglich.
 Da jede Idee jederzeit genau einen Status hat, wird dieser nicht über eine eigene ID identifiziert, sondern über die ID der Idee, zu der der Status gehört. Der Status wird initial beim Anlegen der Idee im Backend gesetzt. Daher kann er über die API lediglich über **PUT**-Requests auf die durch die ID der Idee definierte URL angepasst, nicht aber angelegt (**POST**) werden.
-Wird eine nicht definierte Methode aufgerufen, wird grundsätzlich mit dem HTTP-Statuscode 405 (Method not allowed) geantwortet (siehe auch Tabelle 1: Verwendung der HTTP-Verben).
+Wird eine nicht definierte Methode aufgerufen, wird grundsätzlich mit dem HTTP-Statuscode 405 („Method not allowed“) geantwortet (siehe auch Tabelle 1: Verwendung der HTTP-Verben).
 
 ## Bewerten einer Idee
 Ratings werden anonym abgegeben. Daher wird beim Anzeigen der Ratings kein Benutzer mit zurückgegeben. Beim Erstellen muss dagegen der Nutzer übergeben werden, damit im Backend sichergestellt werden kann, dass ein Nutzer jede Idee jeweils nur einmal bewerten kann. Hat der angemeldete Nutzer eine Idee bereits bewertet, wird diese bei einer erneuten Bewertung überschrieben.
@@ -38,21 +38,21 @@ Bei der Antwort wird im HTTP Response Header der Parameter **Content-Language** 
 Neben den explizit geforderten Anforderungen in den User Stories sind im Rahmen des Entwurfes eines Backend APIs auch weiterführende Ideen für mögliche sinnvolle Schnittstellenmethoden dokumentiert worden. So ließe sich beispielsweise bei einem **GET** auf den Endpunkt **/ideas** eine Liste der publizierten Ideen zurückgeben, um in der Startansicht der UI eine Übersicht der bisherigen Ideen anzuzeigen.
 Eine umfassende Gegenüberstellung der verschiedenen HTTP-Verben und deren Verwendung für die definierten Endpunkte ist in der untenstehenden Tabelle vorgenommen worden.
 
-### Tabelle 1: Verwendung der HTTP-Verben
-|Request-URI                              |  GET                            | POST  	          | PUT  	           | DELETE  	         |
-|---	                                  | ---	                            | ---	              | ---	               | ---    	         |
-|{version}/idea                           | 405                             |  `siehe Doku (1)`   |  405               |  405                |
-|{version}/idea/{id} 	                  | `siehe Doku (3)`                | 405                 | `siehe Doku (4)`   | `siehe Doku (2)`    |
-|{version}/idea/{id}/comment	          | 405                             | `siehe Doku (5)`    |  405               | 405                 |
-|{version}/idea/{id}/comment/{commentId}  | 405                             | 405     	          | *Kommentar ändern* | *Kommentar löschen* |
-|{version}/idea/{id}/rating 	          | 405                             | `siehe Doku (6)`    | 405                | 405                 |
-|{version}/idea/{id}/status 	          | 405                             | 405                 | `siehe Doku (9)`   | 405                 |
-|{version}/ideas                          | *Liste aller Ideen*             | 405                 | 405                | 405                 |
-|{version}/ideas/{userId}	              | `siehe Doku (8)`                | 405                 | 405                | 405                 |
-|{version}/signin 	                      | 405                             | *Anmeldung*         | 405                | 405                 |
-|{version}/signup 	                      | 405                             | `siehe Doku (7)`    | 405                | 405                 |
+## Tabelle 1: Verwendung der HTTP-Verben
+|Request-URI                             |  GET                            | POST  	             | PUT  	           | DELETE  	         |
+|---	                                 | ---	                           | ---	             | ---	               | ---    	         |
+|{version}/idea                          | 405                             | `siehe Swagger (1)` |  405                |  405                |
+|{version}/idea/{id} 	                 | `siehe Swagger (3)`             | 405                 | `siehe Swagger (4)` | `siehe Swagger (2)` |
+|{version}/idea/{id}/comment	         | 405                             | `siehe Swagger (5)` |  405                | 405                 |
+|{version}/idea/{id}/comment/{commentId} | 405                             | 405     	         | *Kommentar ändern*  | *Kommentar löschen* |
+|{version}/idea/{id}/rating 	         | 405                             | `siehe Swagger (6)` | 405                 | 405                 |
+|{version}/idea/{id}/status 	         | 405                             | 405                 | `siehe Swagger (9)` | 405                 |
+|{version}/ideas                         | *Liste aller Ideen*             | 405                 | 405                 | 405                 |
+|{version}/ideas/{userId}	             | `siehe Swagger (8)`             | 405                 | 405                 | 405                 |
+|{version}/signin 	                     | 405                             | *Anmeldung*         | 405                 | 405                 |
+|{version}/signup 	                     | 405                             | `siehe Swagger (7)` | 405                 | 405                 |
 
-### Legende
+## Legende
 |Eintrag                | Beschreibung                                                                                |
 |---	                | ---                                                                                         |
 |HTTP-Statuscode 405    | Method not allowed : Die angefragte Methode ist nicht definiert und wird nicht unterstützt. |
