@@ -36,6 +36,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces:
       - application/json
       responses:
@@ -147,6 +152,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces:
       - application/json
       responses:
@@ -278,6 +288,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces: 
       - application/json
       responses:
@@ -377,7 +392,7 @@ paths:
                       description: "Der Inhalt dieses Kommentars"
                       example: "Ich stimme zu!"
         401:
-          description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist."
+          description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da der Nutzer nicht  angemeldet ist."
         403:
           description: "Es wurde kein geänderter Parameter übergeben. An der Idee wurde keine Änderung durchgeführt."
         404:
@@ -399,6 +414,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces:
       - application/json
       responses:
@@ -439,6 +459,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces: 
       - application/json
       responses:
@@ -568,6 +593,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces: 
       - application/json
       responses:
@@ -698,6 +728,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces: 
       - application/json
       responses:
@@ -819,6 +854,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces:
       - application/json
       responses:
@@ -958,6 +998,11 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
+      - in: query
+        name: version
+        required: false
+        description: "Die bevorzugte API-Version"
+        type: number
       produces: 
       - application/json
       responses:
