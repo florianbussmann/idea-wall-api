@@ -2,7 +2,16 @@
 Für den Entwurf des Backend APIs wurde das Framework Swagger eingesetzt. Die Design-Dokumentation kann unter https://app.swaggerhub.com/ eingesehen werden, indem die Datei /ApiDoc/swagger.yaml auf der Plattform hochgeladen wird.
 
 # Dokumentation der Design-Entscheidungen
-[Arthur:Design-Entscheidungstext]
+Zum Einsehen von Ideen ist keine Autorisierung erforderlich. Daher muss bei der entsprechenden Methode (GET-Request auf „idea/{id}“ keine Autorisierung erfolgen. Für weiter Operationen, etwa das Hinzufügen einer Idee, muss der Benutzer angemeldet sein. An den Stellen, an denen ein Passwort des Nutzers übertragen werden muss, erfolgt dies gehasht, damit keine Passwörter im Klartext abgehört werden können.
+
+Um die Anzahl der Requests gegen die Idea-Wall-API zu verringern, wird beim Verändern oder Erstellen einer Idee stets direkt das erstellte bzw. geänderte Objekt in der Response an das Frontend zurückgegeben. Dadurch muss nach dem Anlegen einer Idee nicht erneut ein Request abgesendet werden, um diese dem Benutzer anzeigen zu können. 
+
+Ratings werden anonym abgegeben. Daher wird beim Anzeigen der Ratings kein Benutzer mit zurückgegeben. Beim Erstellen muss dagegen ein Nutzer übergeben werden, damit im Backend sichergestellt werden kann, dass ein Nutzer jede Idee jeweils nur einmal bewerten kann. Beim Versuch, eine Idee zu bewerten, die der angemeldete Nutzer bereits bewertet hat, wird als HTTP-Statuscode ein Fehler zurückgegeben und die Bewertung nicht gespeichert.
+
+Die Methoden „post“ und „put“ werden innerhalb der API einheitlich gemäß der W3C-Definition (https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) verwendet. Das Hinzufügen einer Ressource (Idee, Kommentar, Bewertung) erfolgt über eine andere URL als das spätere Bearbeiten. Dabei wird über die erste URL, die nicht spezifisch auf eine bestimmte Ressource hindeutet, nur die „post“-Operation zum Hinzufügen verwendet. Die Ressource wird dann unter einer eigenen URL angelegt, die die im Backend generierte ID der Ressource enthält. Über diese kann sie später mit „put“-Requests geändert werden. „Post“-Requests auf die Ressourcen-spezifischen URLs sind nicht möglich.
+Da jede Idee jederzeit genau einen Status hat, wird dieser nicht über eine eigene ID identifiziert, sondern über die ID der Idee, zu der der Status gehört. Der Status wird initial beim Anlegen der Idee im Backend gesetzt. Daher kann er über die API lediglich über „put“-Requests auf die durch die ID der Idee definierte URL angepasst, nicht aber angelegt („post“) werden.
+Wird eine nicht definierte Methode aufgerufen, wird grundsätzlich mit dem http-Statuscode 405 (Method not allowed) geantwortet (siehe auch Tabelle unten).
+
 
 # Unterstützung unterschiedlicher Sprachen
 [Moritz:Language Text]
