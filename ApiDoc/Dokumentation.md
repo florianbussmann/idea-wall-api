@@ -13,8 +13,13 @@ Da jede Idee jederzeit genau einen Status hat, wird dieser nicht über eine eige
 Wird eine nicht definierte Methode aufgerufen, wird grundsätzlich mit dem http-Statuscode 405 (Method not allowed) geantwortet (siehe auch Tabelle unten).
 
 
-# Unterstützung unterschiedlicher Sprachen
-[Moritz:Language Text]
+# Unterstützung unterschiedlicher Sprachen (User-Story 10)
+Die Formate der übergebenen Daten usw. richten sich nach der Sprache, in der die Idee angezeigt werden soll. Texte, etwa die Beschreibung der Idee werden dabei nicht automatisch übersetzt. Die verwendeten Formate richten sich dabei automatisch nach der vom Browser bei jedem Request übergebenen Sprachkennung. Soll die Ausgabe in einer anderen Sprache als dieser erfolgen, kann der optionale Sprach-Parameter in der Request-URL gesetzt werden.
+
+Wird die in der URL übergebene Sprache vom Server nicht unterstützt, wird die im Browser standardmäßig genutzte Sprache genutzt. Ist diese nicht gesetzt oder wird nicht unterstützt und in der URL ist ebenfalls keine bzw. keine unterstützte Sprache gesetzt, wird die Standard-Sprache des Servers genutzt.
+
+Bei der Antwort wird im Header der Parameter „Content-Language“ gesetzt, damit im Frontend die Sprache der Antwort angezeigt werden kann.
+
 
 # Weiterführende Ideen
 Neben den explizit geforderten Anforderungen in den User Stories, sind im Rahmen des Entwurfes eines Backend APIs auch weiterführende Ideen für mögliche sinnvolle Schnittstellenmethoden dokumentiert worden. So ließe sich beispielsweise bei einem GET auf den Endpunkt /ideas eine Liste der publizierten Ideen zurückgeben, um in der Startansicht der UI eine Übersicht der bisherigen Ideen anzuzeigen.
