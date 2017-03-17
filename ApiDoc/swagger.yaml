@@ -9,7 +9,7 @@ paths:
     post:
       summary: "1 Fügt eine Idea der Wall hinzu"
       operationId: create
-      description: "Fügt eine Idee der Wall hinzu"
+      description: "Fügt eine neue Idee der Wall hinzu und gibt diese zurück. Sie erhält eine eindeutige ID, über die die Idee später wieder aufgefunden werden kann, und wird einem Benutzer als Ersteller zugeordnet."
       consumes:
       - application/json
       parameters:
@@ -138,7 +138,7 @@ paths:
   /{version}/idea/{id}:
     get:
       summary: "3 Zeigt die Idee mit der angegebenen ID an"
-      description: "Zeigt die Idee mit der angegebenen ID an"
+      description: "Zeigt die Idee mit der angegebenen ID und allen ihren angegebenen Attributen an"
       consumes:
       - application/json
       parameters:
@@ -400,7 +400,7 @@ paths:
     delete:
       summary: "2 Die Idee mit der angegebenen ID wird gelöscht"
       operationId: delete
-      description: "Die Idee mit der angegebenen ID wird gelöscht"
+      description: "Die Idee mit der angegebenen ID sowie alle dazugehörigen Kommentare werden gelöscht. Die Idee kann nicht mehr aufgerufen werden."
       consumes:
       - application/json
       parameters:
@@ -704,7 +704,7 @@ paths:
     put:
       summary: "9 Status einer Idee setzen"
       operationId: change status
-      description: "Der Idee wird ein Status zugeordnet."
+      description: "Der Idee wird ein eindeutiger, vorher global definierter Status zugeordnet."
       consumes:
       - application/json
       parameters:
@@ -838,7 +838,7 @@ paths:
   /{version}/ideas/{userId}:
     get:
       summary: "8 Zeigt die Ideen eines bestimmten Benutzers an"
-      description: "Zeigt die Ideen eines bestimmten Benutzers an"
+      description: "Zeigt alle Ideen an, die von einem bestimmten Benutzer erstellt wurden."
       consumes:
       - application/json
       parameters:
@@ -969,7 +969,7 @@ paths:
     post:
       summary: "7 Anlegen einer neuen Benutzer-Registrierung"
       operationId: signup
-      description: "Die Daten für einen neuen Benutzer werden registriert."
+      description: "Die Daten für einen neuen Benutzer werden registriert. Er bekommt eine eindeutige ID und kann sich später mit seinen angegebenen Daten bei der Idea-Wall anmelden."
       consumes:
       - application/json
       parameters:
