@@ -6,516 +6,415 @@ info:
   
 paths:
   /idea:
-        post:
-          summary: "1 Fügt eine Idea der Wall hinzu"
-          operationId: create
-          description: "Fügt eine Idee der Wall hinzu"
-          consumes:
-          - application/json
-          parameters:
-          - in: body
-            name: idea
-            required: true
-            description: "Die zu erstellende Idee"
-            schema:
-              type: object
-              required:
-              - titel
-              - description
-              properties:
-                titel:
-                  type: string
-                  description: "Der Titel der zu erstellenden Idee"
-                  example: "Mehr Kaffe"
-                description:
-                  type: string
-                  description: "Die Beschreibung der zu erstellenden Idee"
-                  example: "Wir brauchen mehr Kaffe in der Küche"
-          produces:
-          - application/json
-          responses:
-            201:
-              description: "Die Idee wurde erfolgreich erstellt"
-              schema:
-                type: object
-                required:
-                - titel
-                - description
-                - author
-                - status
-                - numberOfRatings
-                - sumOfAllRatings
-                - comments
-                properties:
-                  titel:
-                    type: string
-                    description: "Der Titel der zu erstellenden Idee"
-                    example: "Mehr Kaffe"
-                  description:
-                    type: string
-                    description: "Die Beschreibung der zu erstellenden Idee"
-                    example: "Wir brauchen mehr Kaffe in der Küche"
-                  author:
-                    type: object
-                    required:
-                    - name
-                    - password
-                    - id
-                    properties:
-                      name:
-                        type: string
-                        description: "Der Benutzername des Nutzers"
-                        example: "Max Mustermann"
-                      password:
-                        type: string
-                        description: "Das gehashte Passwort des Nutzers"
-                        example: "1234"
-                      id:
-                        type: integer
-                        description: "Die ID des Nutzers"
-                        example: 1
-                  status:
-                    type: integer
-                    description: "Die ID des aktuellen Status der Idee"
-                    example: 2
-                  numberOfRatings:
-                    type: integer
-                    minimum: 0
-                    description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
-                    example: 12
-                  sumOfAllRatings:
-                    type: number
-                    minimum: 0
-                    maximum: 5
-                    description: "Die durchschnittliche Bewertung für diese Idee"
-                    example: 3.8
-                  comments:
-                    type: array
-                    description: "Ein Array mit allen Kommentaren zu dieser Idee"
-                    items:
-                      type: object
-                      required:
-                      - ID
-                      - author
-                      - text
-                      properties:
-                        ID:
-                          type: integer
-                          description: "Die ID des Kommentars"
-                        author:
-                          type: object
-                          description: "Der Autor dieses Kommentars"
-                          required:
-                          - name
-                          - password
-                          - id
-                          properties:
-                            name:
-                              type: string
-                              description: "Der Benutzername des Nutzers"
-                            password:
-                              type: string
-                              description: "Das gehashte Passwort des Nutzers"
-                            id:
-                              type: integer
-                              description: "Die ID des Nutzers"
-                        text:
-                          type: string
-                          description: "Der Inhalt dieses Kommentars"
-                          example: "Ich stimme zu!"
-            400:
-              description: "Ungültiger Input, die Idee konnte nicht erstellt werden"
-  /idea/{id}:
-        get:
-          summary: "3 Zeigt die Idee mit der angegebenen ID an"
-          description: "Zeigt die Idee mit der angegebenen ID an"
-          consumes:
-          - application/json
-          parameters:
-          - in: path
-            name: id
-            type: integer
-            required: true
-            description: "Die ID der zu löschenden Idee"
-          produces:
-          - application/json
-          responses:
-            200:
-              description: "Die angebene Idee konnte gefunden werden"
-              schema:
-                type: object
-                required:
-                - titel
-                - description
-                - author
-                - status
-                - numberOfRatings
-                - sumOfAllRatings
-                - comments
-                properties:
-                  titel:
-                    type: string
-                    description: "Der Titel dieser Idee"
-                    example: "Mehr Kaffe"
-                  description:
-                    type: string
-                    description: "Der Inhalt dieser Idee"
-                    example: "Wir brauchen mehr Kaffe in der Küche"
-                  author:
-                    type: object
-                    description: "Der Author dieser Idee"
-                    required:
-                    - name
-                    - password
-                    - id
-                    properties:
-                      name:
-                        type: string
-                        description: "Der Benutzername des Nutzers"
-                        example: "Max Mustermann"
-                      password:
-                        type: string
-                        description: "Das gehashte Passwort des Nutzers"
-                        example: "1234"
-                      id:
-                        type: integer
-                        description: "Die ID des Nutzers"
-                        example: 1
-                  status:
-                    type: integer
-                    description: "Die ID des aktuellen Status der Idee"
-                    example: 2
-                  numberOfRatings:
-                    type: integer
-                    minimum: 0
-                    description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
-                    example: 12
-                  sumOfAllRatings:
-                    type: number
-                    minimum: 0
-                    maximum: 5
-                    description: "Die durchschnittliche Bewertung für diese Idee"
-                    example: 3.8
-                  comments:
-                    type: array
-                    description: "Ein Array mit allen Kommentaren zu dieser Idee"
-                    items:
-                      type: object
-                      required:
-                      - ID
-                      - author
-                      - text
-                      properties:
-                        ID:
-                          type: integer
-                          description: "Die ID des Kommentars"
-                          example: 1
-                        author:
-                          type: object
-                          description: "Der Author dieser Idee"
-                          required:
-                          - name
-                          - password
-                          - id
-                          properties:
-                            name:
-                              type: string
-                              description: "Der Benutzername des Nutzers"
-                              example: "Max Mustermann"
-                            password:
-                              type: string
-                              description: "Das gehashte Passwort des Nutzers"
-                              example: "1234"
-                            id:
-                              type: integer
-                              description: "Die ID des Nutzers"
-                              example: 1
-                        text:
-                          type: string
-                          description: "Der Inhalt dieses Kommentars"
-                          example: "Ich stimme zu!"
-            404:
-              description: "Die angegebene Idee kann nicht gefunden werden."
-        delete:
-          summary: "2 Die Idee mit der angegebenen ID wird gelöscht"
-          operationId: delete
-          description: "Die Idee mit der angegebenen ID wird gelöscht"
-          consumes:
-          - application/json
-          parameters:
-          - in: path
-            name: id
-            type: integer
-            required: true
-            description: "Der ID der zu löschenden Idee"
-          produces:
-          - application/json
-          responses:
-            200:
-              description: "Die Idee mit der angebenen Id konnte erfolgreich gelöscht werden."
-              schema:
-                type: integer
-                example: 1
-            401:
-              description: "Die ausgewählte Idee kann nicht gelöscht werde, da der Nutzer nicht angemeldet ist."
-            403:
-              description: "Die ausgewählte Idee kann nicht gelöscht werde, da sie von jemand anderem als dem angemeldeten Nutzer erstellt wurde."
-            404:
-              description: "Die angegebene Idee kann nicht gefunden werden."
-        put:
-          summary: "4 Ändern einer zuvor eingetragenen Idee"
-          operationId: update
-          description: "Die Eigenschaften (Name, Beschreibung) der Idee mit der angegebenen ID werden geändert. Die neuen Eigenschaften werden persistent gespeichert und in der Änderungshistorie der Idee vermerkt."
-          consumes:
-          - application/json
-          parameters:
-          - in: path
-            name: id
-            type: integer
-            description: "Die ID der zu ändernden Idee"
-            required: true
-          - in: body
-            name: ideaChange
-            required: true
-            description: "Die Veränderungen an der Idee"
-            schema: 
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: "Mehr Kaffee und Tee"
-                  description: "Der geänderte Titel der Idee"
-                description:
-                  type: string
-                  example: "Wir brauchen mehr Kaffee und Tee in der Küche"
-                  description: "Die geänderte Beschreibung der Idee"
-          produces: 
-          - application/json
-          responses:
-            200:
-              description: "Die Idee mit der angegebenen ID wurde erfolgreich geändert."
-              schema:
-                type: object
-                description: "Die geänderte Idee"
-                required:
-                - titel
-                - description
-                - author
-                - status
-                - numberOfRatings
-                - sumOfAllRatings
-                - comments
-                properties:
-                  titel:
-                    type: string
-                    description: "Der Titel dieser Idee"
-                    example: "Mehr Kaffe"
-                  description:
-                    type: string
-                    description: "Der Inhalt dieser Idee"
-                    example: "Wir brauchen mehr Kaffe in der Küche"
-                  author:
-                    type: object
-                    description: "Der Author dieser Idee"
-                    required:
-                    - name
-                    - password
-                    - id
-                    properties:
-                      name:
-                        type: string
-                        description: "Der Benutzername des Nutzers"
-                        example: "Max Mustermann"
-                      password:
-                        type: string
-                        description: "Das gehashte Passwort des Nutzers"
-                        example: "1234"
-                      id:
-                        type: integer
-                        description: "Die ID des Nutzers"
-                        example: 1
-                  status:
-                    type: integer
-                    description: "Die ID des aktuellen Status der Idee"
-                    example: 2
-                  numberOfRatings:
-                    type: integer
-                    minimum: 0
-                    description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
-                    example: 12
-                  sumOfAllRatings:
-                    type: number
-                    minimum: 0
-                    maximum: 5
-                    description: "Die durchschnittliche Bewertung für diese Idee"
-                    example: 3.8
-                  comments:
-                    type: array
-                    description: "Ein Array mit allen Kommentaren zu dieser Idee"
-                    items:
-                      type: object
-                      required:
-                      - ID
-                      - author
-                      - text
-                      properties:
-                        ID:
-                          type: integer
-                          description: "Die ID des Kommentars"
-                          example: 1
-                        author:
-                          type: object
-                          description: "Der Author dieser Idee"
-                          required:
-                          - name
-                          - password
-                          - id
-                          properties:
-                            name:
-                              type: string
-                              description: "Der Benutzername des Nutzers"
-                              example: "Max Mustermann"
-                            password:
-                              type: string
-                              description: "Das gehashte Passwort des Nutzers"
-                              example: "1234"
-                            id:
-                              type: integer
-                              description: "Die ID des Nutzers"
-                              example: 1
-                        text:
-                          type: string
-                          description: "Der Inhalt dieses Kommentars"
-                          example: "Ich stimme zu!"
-            401:
-              description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist."
-            403:
-              description: "Es wurde kein geänderter Parameter übergeben. An der Idee wurde keine Änderung durchgeführt."
-            404:
-              description: "Unter der angegebenen ID konnte keine Idee gefunden werden"
-              
-  /ideas/{userId}:
-        get:
-          summary: "8 Zeigt die Ideen eines bestimmten Benutzers an"
-          description: "Zeigt die Ideen eines bestimmten Benutzers an"
-          consumes:
-          - application/json
-          parameters:
-          - in: path
-            name: userId
-            type: integer
-            required: true
-            description: "Die Benutzerkennung"
-          produces:
-          - application/json
-          responses:
-            200:
-              description: "Der angegebene Nutzer existiert und hat bereits Ideen veröffentlicht."
-              schema:
-                type: object
-                required:
-                - ideas
-                properties:
-                  ideas:
-                    type: array
-                    items:
-                      type: object
-                      required:
-                      - titel
-                      - description
-                      - author
-                      - status
-                      - numberOfRatings
-                      - sumOfAllRatings
-                      - comments
-                      properties:
-                        titel:
-                          type: string
-                          description: "Der Titel dieser Idee"
-                          example: "Mehr Kaffe"
-                        description:
-                          type: string
-                          description: "Der Inhalt dieser Idee"
-                          example: "Wir brauchen mehr Kaffe in der Küche"
-                        author:
-                          type: object
-                          description: "Der Author dieser Idee"
-                          required:
-                          - name
-                          - password
-                          - id
-                          properties:
-                            name:
-                              type: string
-                              description: "Der Benutzername des Nutzers"
-                              example: "Max Mustermann"
-                            password:
-                              type: string
-                              description: "Das gehashte Passwort des Nutzers"
-                              example: "1234"
-                            id:
-                              type: integer
-                              description: "Die ID des Nutzers"
-                              example: 1
-                        status:
-                          type: integer
-                          description: "Die ID des aktuellen Status der Idee"
-                          example: 2
-                        numberOfRatings:
-                          type: integer
-                          minimum: 0
-                          description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
-                          example: 12
-                        sumOfAllRatings:
-                          type: number
-                          minimum: 0
-                          maximum: 5
-                          description: "Die durchschnittliche Bewertung für diese Idee"
-                          example: 3.8
-                        comments:
-                          type: array
-                          description: "Ein Array mit allen Kommentaren zu dieser Idee"
-                          items:
-                            type: object
-                            required:
-                            - ID
-                            - author
-                            - text
-                            properties:
-                              ID:
-                                type: integer
-                                description: "Die ID des Kommentars"
-                                example: 1
-                              author:
-                                type: object
-                                description: "Der Author dieser Idee"
-                                required:
-                                - name
-                                - password
-                                - id
-                                properties:
-                                  name:
-                                    type: string
-                                    description: "Der Benutzername des Nutzers"
-                                    example: "Max Mustermann"
-                                  password:
-                                    type: string
-                                    description: "Das gehashte Passwort des Nutzers"
-                                    example: "1234"
-                                  id:
-                                    type: integer
-                                    description: "Die ID des Nutzers"
-                                    example: 1
-                              text:
-                                type: string
-                                description: "Der Inhalt dieses Kommentars"
-                                example: "Ich stimme zu!"
-            204:
-              description: "Der angegebene Nutzer existiert, hat aber bislang noch keine Ideen veröffentlicht."
-            404:
-                description: "Es existiert kein Benutzer mit der angegebenen Benutzerkennung."
-  /idea/{id}/comment:
     post:
+      summary: "1 Fügt eine Idea der Wall hinzu"
+      operationId: create
+      description: "Fügt eine Idee der Wall hinzu"
+      consumes:
+      - application/json
+      parameters:
+      - in: body
+        name: idea
+        required: true
+        description: "Die zu erstellende Idee"
+        schema:
+          type: object
+          required:
+          - titel
+          - description
+          properties:
+            titel:
+              type: string
+              description: "Der Titel der zu erstellenden Idee"
+              example: "Mehr Kaffe"
+            description:
+              type: string
+              description: "Die Beschreibung der zu erstellenden Idee"
+              example: "Wir brauchen mehr Kaffe in der Küche"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
+      produces:
+      - application/json
+      responses:
+        201:
+          description: "Die Idee wurde erfolgreich erstellt"
+          schema:
+            type: object
+            required:
+            - titel
+            - description
+            - author
+            - status
+            - numberOfRatings
+            - sumOfAllRatings
+            - comments
+            properties:
+              titel:
+                type: string
+                description: "Der Titel der zu erstellenden Idee"
+                example: "Mehr Kaffe"
+              description:
+                type: string
+                description: "Die Beschreibung der zu erstellenden Idee"
+                example: "Wir brauchen mehr Kaffe in der Küche"
+              author:
+                type: object
+                required:
+                - name
+                - password
+                - id
+                properties:
+                  name:
+                    type: string
+                    description: "Der Benutzername des Nutzers"
+                    example: "Max Mustermann"
+                  password:
+                    type: string
+                    description: "Das gehashte Passwort des Nutzers"
+                    example: "1234"
+                  id:
+                    type: integer
+                    description: "Die ID des Nutzers"
+                    example: 1
+              status:
+                type: integer
+                description: "Die ID des aktuellen Status der Idee"
+                example: 1
+              numberOfRatings:
+                type: integer
+                minimum: 0
+                description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
+                example: 12
+              sumOfAllRatings:
+                type: number
+                minimum: 0
+                maximum: 5
+                description: "Die durchschnittliche Bewertung für diese Idee"
+                example: 3.8
+              comments:
+                type: array
+                description: "Ein Array mit allen Kommentaren zu dieser Idee"
+                items:
+                  type: object
+                  required:
+                  - ID
+                  - author
+                  - text
+                  properties:
+                    ID:
+                      type: integer
+                      description: "Die ID des Kommentars"
+                    author:
+                      type: object
+                      description: "Der Autor dieses Kommentars"
+                      required:
+                      - name
+                      - password
+                      - id
+                      properties:
+                        name:
+                          type: string
+                          description: "Der Benutzername des Nutzers"
+                        password:
+                          type: string
+                          description: "Das gehashte Passwort des Nutzers"
+                        id:
+                          type: integer
+                          description: "Die ID des Nutzers"
+                    text:
+                      type: string
+                      description: "Der Inhalt dieses Kommentars"
+                      example: "Ich stimme zu!"
+        400:
+          description: "Ungültiger Input, die Idee konnte nicht erstellt werden"
+  /idea/{id}:
+    get:
+      summary: "3 Zeigt die Idee mit der angegebenen ID an"
+      description: "Zeigt die Idee mit der angegebenen ID an"
+      consumes:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: "Die ID der zu löschenden Idee"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
+      produces:
+      - application/json
+      responses:
+      200:
+        description: "Die angebene Idee konnte gefunden werden"
+        schema:
+        type: object
+        required:
+        - titel
+        - description
+        - author
+        - status
+        - numberOfRatings
+        - sumOfAllRatings
+        - comments
+        properties:
+        titel:
+          type: string
+          description: "Der Titel dieser Idee"
+          example: "Mehr Kaffe"
+        description:
+          type: string
+          description: "Der Inhalt dieser Idee"
+          example: "Wir brauchen mehr Kaffe in der Küche"
+        author:
+          type: object
+          description: "Der Author dieser Idee"
+          required:
+          - name
+          - password
+          - id
+          properties:
+          name:
+            type: string
+            description: "Der Benutzername des Nutzers"
+            example: "Max Mustermann"
+          password:
+            type: string
+            description: "Das gehashte Passwort des Nutzers"
+            example: "1234"
+          id:
+            type: integer
+            description: "Die ID des Nutzers"
+            example: 1
+          status:
+          type: integer
+          description: "Die ID des aktuellen Status der Idee"
+          example: 2
+          numberOfRatings:
+          type: integer
+          minimum: 0
+          description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
+          example: 12
+          sumOfAllRatings:
+          type: number
+          minimum: 0
+          maximum: 5
+          description: "Die durchschnittliche Bewertung für diese Idee"
+          example: 3.8
+          comments:
+          type: array
+          description: "Ein Array mit allen Kommentaren zu dieser Idee"
+          items:
+            type: object
+            required:
+            - ID
+            - author
+            - text
+            properties:
+            ID:
+              type: integer
+              description: "Die ID des Kommentars"
+              example: 1
+            author:
+              type: object
+              description: "Der Author dieser Idee"
+              required:
+              - name
+              - password
+              - id
+              properties:
+              name:
+              type: string
+              description: "Der Benutzername des Nutzers"
+              example: "Max Mustermann"
+              password:
+              type: string
+              description: "Das gehashte Passwort des Nutzers"
+              example: "1234"
+              id:
+              type: integer
+              description: "Die ID des Nutzers"
+              example: 1
+            text:
+              type: string
+              description: "Der Inhalt dieses Kommentars"
+              example: "Ich stimme zu!"
+      404:
+        description: "Die angegebene Idee kann nicht gefunden werden."
+    put:
+      summary: "4 Ändern einer zuvor eingetragenen Idee"
+      operationId: update
+      description: "Die Eigenschaften (Name, Beschreibung) der Idee mit der angegebenen ID werden geändert. Die neuen Eigenschaften werden persistent gespeichert und in der Änderungshistorie der Idee vermerkt."
+      consumes:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        type: integer
+        description: "Die ID der zu ändernden Idee"
+        required: true
+      - in: body
+        name: ideaChange
+        required: true
+        description: "Die Veränderungen an der Idee"
+        schema: 
+        type: object
+          properties:
+            title:
+              type: string
+              example: "Mehr Kaffee und Tee"
+              description: "Der geänderte Titel der Idee"
+            description:
+              type: string
+              example: "Wir brauchen mehr Kaffee und Tee in der Küche"
+              description: "Die geänderte Beschreibung der Idee"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
+      produces: 
+      - application/json
+      responses:
+        200:
+          description: "Die Idee mit der angegebenen ID wurde erfolgreich geändert."
+          schema:
+            type: object
+            description: "Die geänderte Idee"
+            required:
+            - titel
+            - description
+            - author
+            - status
+            - numberOfRatings
+            - sumOfAllRatings
+            - comments
+            properties:
+              titel:
+                type: string
+                description: "Der Titel dieser Idee"
+                example: "Mehr Kaffe"
+              description:
+                type: string
+                description: "Der Inhalt dieser Idee"
+                example: "Wir brauchen mehr Kaffe in der Küche"
+              author:
+                type: object
+                description: "Der Author dieser Idee"
+                required:
+                - name
+                - password
+                - id
+                properties:
+                  name:
+                    type: string
+                    description: "Der Benutzername des Nutzers"
+                    example: "Max Mustermann"
+                  password:
+                    type: string
+                    description: "Das gehashte Passwort des Nutzers"
+                    example: "1234"
+                  id:
+                    type: integer
+                    description: "Die ID des Nutzers"
+                    example: 1
+              status:
+                type: integer
+                description: "Die ID des aktuellen Status der Idee"
+                example: 2
+              numberOfRatings:
+                type: integer
+                minimum: 0
+                description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
+                example: 12
+              sumOfAllRatings:
+                type: number
+                minimum: 0
+                maximum: 5
+                description: "Die durchschnittliche Bewertung für diese Idee"
+                example: 3.8
+              comments:
+                type: array
+                description: "Ein Array mit allen Kommentaren zu dieser Idee"
+                items:
+                  type: object
+                  required:
+                  - ID
+                  - author
+                  - text
+                  properties:
+                    ID:
+                      type: integer
+                      description: "Die ID des Kommentars"
+                      example: 1
+                    author:
+                      type: object
+                      description: "Der Author dieser Idee"
+                      required:
+                      - name
+                      - password
+                      - id
+                      properties:
+                        name:
+                          type: string
+                          description: "Der Benutzername des Nutzers"
+                          example: "Max Mustermann"
+                        password:
+                          type: string
+                          description: "Das gehashte Passwort des Nutzers"
+                          example: "1234"
+                        id:
+                          type: integer
+                          description: "Die ID des Nutzers"
+                          example: 1
+                    text:
+                      type: string
+                      description: "Der Inhalt dieses Kommentars"
+                      example: "Ich stimme zu!"
+        401:
+          description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist."
+        403:
+          description: "Es wurde kein geänderter Parameter übergeben. An der Idee wurde keine Änderung durchgeführt."
+        404:
+          description: "Unter der angegebenen ID konnte keine Idee gefunden werden"
+    delete:
+      summary: "2 Die Idee mit der angegebenen ID wird gelöscht"
+      operationId: delete
+      description: "Die Idee mit der angegebenen ID wird gelöscht"
+      consumes:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        type: integer
+        required: true
+        description: "Der ID der zu löschenden Idee"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
+      produces:
+      - application/json
+      responses:
+        200:
+          description: "Die Idee mit der angebenen Id konnte erfolgreich gelöscht werden."
+          schema:
+            type: integer
+            example: 1
+        401:
+          description: "Die ausgewählte Idee kann nicht gelöscht werde, da der Nutzer nicht angemeldet ist."
+        403:
+          description: "Die ausgewählte Idee kann nicht gelöscht werde, da sie von jemand anderem als dem angemeldeten Nutzer erstellt wurde."
+        404:
+          description: "Die angegebene Idee kann nicht gefunden werden."
+  /idea/{id}/comment:
+    put:
       summary: "5 Eintragen eines Kommentars zu einer Idee"
       operationId: create comment
       description: "Der Kommentar wird gespeichert und mit der Idee mit der angegebenen ID verbunden. Er bekommt eine ID zugeordnet und sein Eintrag wird auch in der Historie der Idee vermerkt."
@@ -535,6 +434,11 @@ paths:
           type: string
           description: "Der Text des Kommentars"
           example: "Das sehe ich auch so."
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
       produces: 
       - application/json
       responses:
@@ -659,6 +563,11 @@ paths:
           minimum: 0
           maximum: 5
           example: 4
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
       produces: 
       - application/json
       responses:
@@ -783,7 +692,12 @@ paths:
         schema:
           type: integer
           description: "Die ID des Status"
-          example: 3
+          example: 
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
       produces: 
       - application/json
       responses:
@@ -888,6 +802,131 @@ paths:
           description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da der Status nur vom Autor der Idee geändert werden kann."
         404:
           description: "Es existiert keine Idee mit der angegebenen Idee."
+  /ideas/{userId}:
+    get:
+      summary: "8 Zeigt die Ideen eines bestimmten Benutzers an"
+      description: "Zeigt die Ideen eines bestimmten Benutzers an"
+      consumes:
+      - application/json
+      parameters:
+      - in: path
+        name: userId
+        type: integer
+        required: true
+        description: "Die Benutzerkennung"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
+      produces:
+      - application/json
+      responses:
+        200:
+          description: "Der angegebene Nutzer existiert und hat bereits Ideen veröffentlicht."
+          schema:
+            type: object
+            required:
+            - ideas
+            properties:
+              ideas:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - titel
+                  - description
+                  - author
+                  - status
+                  - numberOfRatings
+                  - sumOfAllRatings
+                  - comments
+                  properties:
+                    titel:
+                      type: string
+                      description: "Der Titel dieser Idee"
+                      example: "Mehr Kaffe"
+                    description:
+                      type: string
+                      description: "Der Inhalt dieser Idee"
+                      example: "Wir brauchen mehr Kaffe in der Küche"
+                    author:
+                      type: object
+                      description: "Der Author dieser Idee"
+                      required:
+                      - name
+                      - password
+                      - id
+                      properties:
+                        name:
+                          type: string
+                          description: "Der Benutzername des Nutzers"
+                          example: "Max Mustermann"
+                        password:
+                          type: string
+                          description: "Das gehashte Passwort des Nutzers"
+                          example: "1234"
+                        id:
+                          type: integer
+                          description: "Die ID des Nutzers"
+                          example: 1
+                    status:
+                      type: integer
+                      description: "Die ID des aktuellen Status der Idee"
+                      example: 2
+                    numberOfRatings:
+                      type: integer
+                      minimum: 0
+                      description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
+                      example: 12
+                    sumOfAllRatings:
+                      type: number
+                      minimum: 0
+                      maximum: 5
+                      description: "Die durchschnittliche Bewertung für diese Idee"
+                      example: 3.8
+                    comments:
+                      type: array
+                      description: "Ein Array mit allen Kommentaren zu dieser Idee"
+                      items:
+                        type: object
+                        required:
+                        - ID
+                        - author
+                        - text
+                        properties:
+                          ID:
+                            type: integer
+                            description: "Die ID des Kommentars"
+                            example: 1
+                          author:
+                            type: object
+                            description: "Der Author dieser Idee"
+                            required:
+                            - name
+                            - password
+                            - id
+                            properties:
+                              name:
+                                type: string
+                                description: "Der Benutzername des Nutzers"
+                                example: "Max Mustermann"
+                              password:
+                                type: string
+                                description: "Das gehashte Passwort des Nutzers"
+                                example: "1234"
+                              id:
+                                type: integer
+                                description: "Die ID des Nutzers"
+                                example: 1
+                          text:
+                            type: string
+                            description: "Der Inhalt dieses Kommentars"
+                            example: "Ich stimme zu!"
+        204:
+          description: "Der angegebene Nutzer existiert, hat aber bislang noch keine Ideen veröffentlicht."
+        404:
+            description: "Es existiert kein Benutzer mit der angegebenen Benutzerkennung."
   /signup:
     post:
       summary: "7 Anlegen einer neuen Benutzer-Registrierung"
@@ -914,6 +953,11 @@ paths:
               type: string
               description: "Geheimes Passwort"
               example: "123456"
+      - in: query
+        name: lang
+        required: false
+        description: "Die Sprache in der die Formate angezigt werden sollen"
+        type: string
       produces: 
       - application/json
       responses:
