@@ -5,7 +5,7 @@ info:
   description: 'Dies ist die API für die Software-Design Hausarbeit'
   
 paths:
-  /idea:
+  /{version}/idea:
     post:
       summary: "1 Fügt eine Idea der Wall hinzu"
       operationId: create
@@ -36,10 +36,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces:
       - application/json
@@ -135,7 +135,7 @@ paths:
                       example: "Ich stimme zu!"
         400:
           description: "Ungültiger Input, die Idee konnte nicht erstellt werden"
-  /idea/{id}:
+  /{version}/idea/{id}:
     get:
       summary: "3 Zeigt die Idee mit der angegebenen ID an"
       description: "Zeigt die Idee mit der angegebenen ID an"
@@ -152,10 +152,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces:
       - application/json
@@ -288,10 +288,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces: 
       - application/json
@@ -414,10 +414,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces:
       - application/json
@@ -433,7 +433,7 @@ paths:
           description: "Die ausgewählte Idee kann nicht gelöscht werde, da sie von jemand anderem als dem angemeldeten Nutzer erstellt wurde."
         404:
           description: "Die angegebene Idee kann nicht gefunden werden."
-  /idea/{id}/comment:
+  /{version}/idea/{id}/comment:
     post:
       summary: "5 Eintragen eines Kommentars zu einer Idee"
       operationId: create comment
@@ -459,10 +459,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces: 
       - application/json
@@ -566,7 +566,7 @@ paths:
           description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da kein Nutzer  angemeldet ist."
         404:
           description: "Unter der angegebenen ID konnte keine Idee gefunden werden"
-  /idea/{id}/rating:
+  /{version}/idea/{id}/rating:
     post:
       summary: "6 Bewerten einer Idee"
       operationId: create rating
@@ -593,10 +593,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces: 
       - application/json
@@ -702,7 +702,7 @@ paths:
           description: "Der übergebene Benutzer hat die Idee mit der angegebenen ID bereits bewertet. Jeder Nutzer darf eine Idee nur jeweils einmal bewerten."
         404:
           description: "Unter der angegebenen ID konnte keine Idee gefunden werden."
-  /idea/{id}/status:
+  /{version}/idea/{id}/status:
     put:
       summary: "9 Status einer Idee setzen"
       operationId: change status
@@ -728,10 +728,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces: 
       - application/json
@@ -837,7 +837,7 @@ paths:
           description: "Die gewünschte Aktion konnte nicht durchgeführt werden, da der Status nur vom Autor der Idee geändert werden kann."
         404:
           description: "Es existiert keine Idee mit der angegebenen Idee."
-  /ideas/{userId}:
+  /{version}/ideas/{userId}:
     get:
       summary: "8 Zeigt die Ideen eines bestimmten Benutzers an"
       description: "Zeigt die Ideen eines bestimmten Benutzers an"
@@ -854,10 +854,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces:
       - application/json
@@ -967,7 +967,7 @@ paths:
           description: "Der angegebene Nutzer existiert, hat aber bislang noch keine Ideen veröffentlicht."
         404:
             description: "Es existiert kein Benutzer mit der angegebenen Benutzerkennung."
-  /signup:
+  /{version}/signup:
     post:
       summary: "7 Anlegen einer neuen Benutzer-Registrierung"
       operationId: signup
@@ -998,10 +998,10 @@ paths:
         required: false
         description: "Die Sprache in der die Formate angezigt werden sollen"
         type: string
-      - in: query
+      - in: path
         name: version
-        required: false
-        description: "Die bevorzugte API-Version"
+        required: true
+        description: "Die zu verwendende API-Version"
         type: number
       produces: 
       - application/json
