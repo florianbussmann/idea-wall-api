@@ -25,6 +25,8 @@ Für zukünftige Änderungen an dem API wurde ein Paramter für die Identifizier
 
 Beispiel für einen API-Endpunkt: /**{version}**/ideas
 
+Ein Wegfallen dieses Parameters, um stets die neuste Version zu verwenden, ist nicht erlaubt. Dadurch würde im Falle eines Versionssprunges, dieser nicht mehr explizit in der Frontend-Entwicklung erfolgen müssen. Dies hätte widerum zur Folge, das Änderungen am Backend sich direkt auf das Frontend auswirken, welches zu diesem Zeitpunkt noch nicht an die neuen Anforderungen und das Verhalten der Backend API angepasst wäre.
+
 # Unterstützung unterschiedlicher Sprachen (User-Story 10)
 Die Formate der übergebenen Daten usw. richten sich nach der Sprache, in der die Idee angezeigt werden soll. Texte, etwa die Beschreibung der Idee werden dabei nicht automatisch übersetzt. Die verwendeten Formate richten sich dabei automatisch nach der vom Browser bei jedem Request übergebenen Sprachkennung. Soll die Ausgabe in einer anderen Sprache als dieser erfolgen, kann der optionale Sprach-Parameter in der Request-URL gesetzt werden.
 
