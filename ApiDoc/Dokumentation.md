@@ -23,17 +23,19 @@ Der Status einer Idee wird als String zurückgegeben, der den Status repräsenti
 ## Versionierung des Backend API
 Für zukünftige Änderungen an dem API wurde ein Paramter für die Identifizierung des verwendeten Versionsstatus in die URI aufgenommen. Hierdurch wird sichergestellt, dass eine zuvor definierte Funktionsweise sich nicht automatisch durch Änderungen an dem Backend API auf das Frontend auswirkt. Erst bei einem Versionssprung der aufgerufenen API-Endpunkte an eine neuere Version darf sich das grundsätzliche Verhalten des Backend API ändern. Dies schließt nicht aus, dass bei einem kritischen Fehler ein Hotfix die interne Funktionslogik einer bereits definierten Version noch verändern kann.
 
-Beispiel für einen API-Endpunkt: /`{version}`/**ideas**?`lang=de`
+Beispiel für einen API-Endpunkt: /**{version}**/ideas
 
 # Unterstützung unterschiedlicher Sprachen (User-Story 10)
 Die Formate der übergebenen Daten usw. richten sich nach der Sprache, in der die Idee angezeigt werden soll. Texte, etwa die Beschreibung der Idee werden dabei nicht automatisch übersetzt. Die verwendeten Formate richten sich dabei automatisch nach der vom Browser bei jedem Request übergebenen Sprachkennung. Soll die Ausgabe in einer anderen Sprache als dieser erfolgen, kann der optionale Sprach-Parameter in der Request-URL gesetzt werden.
 
 Wird die in der URL übergebene Sprache vom Server nicht unterstützt, wird die im Browser standardmäßig genutzte Sprache genutzt. Ist diese nicht gesetzt oder wird nicht unterstützt und in der URL ist ebenfalls keine bzw. keine unterstützte Sprache gesetzt, wird die Standard-Sprache des Servers genutzt.
 
+Beispiel für einen API-Endpunkt: /{version}/ideas?**lang=de**
+
 Bei der Antwort wird im HTTP Response Header der Parameter **Content-Language** gesetzt, damit im Frontend die Sprache der Antwort angezeigt werden kann.
 
 # Weiterführende Ideen
-Neben den explizit geforderten Anforderungen in den User Stories, sind im Rahmen des Entwurfes eines Backend APIs auch weiterführende Ideen für mögliche sinnvolle Schnittstellenmethoden dokumentiert worden. So ließe sich beispielsweise bei einem **GET** auf den Endpunkt **/ideas** eine Liste der publizierten Ideen zurückgeben, um in der Startansicht der UI eine Übersicht der bisherigen Ideen anzuzeigen.
+Neben den explizit geforderten Anforderungen in den User Stories sind im Rahmen des Entwurfes eines Backend APIs auch weiterführende Ideen für mögliche sinnvolle Schnittstellenmethoden dokumentiert worden. So ließe sich beispielsweise bei einem **GET** auf den Endpunkt **/ideas** eine Liste der publizierten Ideen zurückgeben, um in der Startansicht der UI eine Übersicht der bisherigen Ideen anzuzeigen.
 Eine umfassende Gegenüberstellung der verschiedenen HTTP-Verben und deren Verwendung für die definierten Endpunkte ist in der untenstehenden Tabelle vorgenommen worden.
 
 ### Tabelle 1: Verwendung der HTTP-Verben
