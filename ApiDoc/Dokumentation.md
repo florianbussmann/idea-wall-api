@@ -34,16 +34,16 @@ Eine umfassende Gegenüberstellung der verschiedenen HTTP-Verben und deren Verwe
 ### Tabelle 1: Verwendung der HTTP-Verben
 |Request-URI                    |  GET                            | POST  	          | PUT  	           | DELETE  	         |
 |---	                        |---	                          |---	              |---	               |---    	             |
-|/idea  	                    | *Liste aller Ideen*             |  `siehe Doku (1)` |  405               |  405                |
+|/idea  	                    | 405                             |  `siehe Doku (1)` |  405               |  405                |
 |/idea/{id} 	                | `siehe Doku (3)`                | 405               | `siehe Doku (4)`   | `siehe Doku (2)`    |
-|/idea/{id}/comment	            | *Alle Kommentare zu einer Idee* | `siehe Doku (5)`  |  405               | 405                 |
-|/idea/{id}/comment/{commentId}	| *Ein bestimmter Kommentar*      | 405     	      | *Kommentar ändern* | *Kommentar löschen* |
+|/idea/{id}/comment	            | 405                             | `siehe Doku (5)`  |  405               | 405                 |
+|/idea/{id}/comment/{commentId}	| 405                             | 405     	      | *Kommentar ändern* | *Kommentar löschen* |
 |/idea/{id}/rating 	            | 405                             | `siehe Doku (6)`  | 405                | 405                 |
 |/idea/{id}/rating/{ratingId}   | 405                             | 405               | *Bewertung ändern* | 405                 |
-|/idea/{id}/status 	            | 405                             | `siehe Doku (9)`  | 405                | 405                 |
+|/idea/{id}/status 	            | 405                             | 405               | `siehe Doku (9)`   | 405                 |
+|/ideas                         | *Liste aller Ideen*             | 405               | 405                | 405                 |
 |/ideas/{userId}	            | `siehe Doku (8)`                | 405               | 405                | 405                 |
-|/signup 	                    | 405                             | `siehe Doku (7)`  | 405                | 405                 |
-
+|/signin 	                    | 405                             | *Anmeldung*       | 405                | 405                 |
 ### Legende
 |Eintrag                | Beschreibung                                                                                |
 |---	                | ---                                                                                         |
