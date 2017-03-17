@@ -2,15 +2,23 @@
 Für den Entwurf des Backend APIs wurde das Framework Swagger eingesetzt. Die Design-Dokumentation kann unter [editor.swagger.io](https://editor.swagger.io/) eingesehen werden, indem die Datei **/ApiDoc/swagger.yaml** in den Editor importiert wird. Für weiterführende Übersicht mit Beispielen zu den möglichen Requests muss die Datei **swagger.yaml** auf der Plattform [Swaggerhub](https://app.swaggerhub.com) hochgeladen werden.
 
 # Dokumentation der Design-Entscheidungen
+## Autorisierung
 Zum Einsehen von Ideen ist keine Autorisierung erforderlich. Daher muss bei der entsprechenden Methode (**GET**-Request auf **idea/{id}** keine Autorisierung erfolgen. Für weiter Operationen, etwa das Hinzufügen einer Idee, muss der Benutzer angemeldet sein. An den Stellen, an denen ein Passwort des Nutzers übertragen werden muss, erfolgt dies gehasht, damit keine Passwörter im Klartext abgehört werden können.
+Zur Autorisierung bei den Ressourcen, die diese benötigen, wird Basic Authentication genutzt. Werden keine Login-Daten beim Request mit übergeben, antworten die entsprechenden Methoden der API mit dem HTTP-Statuscode 401 („Unauthorized“) und verlangen somit vom Client dessen Login-Daten. Werden diese in der Folge korrekt übergeben oder waren von Beginn an in den Request-Daten vorhanden, wird die ursprünglich angefragte Operation durchgeführt.
 
+## Responses
 Um die Anzahl der Requests gegen die Idea-Wall-API zu verringern, wird beim Verändern oder Erstellen einer Idee stets direkt das erstellte bzw. geänderte Objekt in der Response an das Frontend zurückgegeben. Dadurch muss nach dem Anlegen einer Idee nicht erneut ein Request abgesendet werden, um diese dem Benutzer anzeigen zu können. 
 
+## Ratings
 Ratings werden anonym abgegeben. Daher wird beim Anzeigen der Ratings kein Benutzer mit zurückgegeben. Beim Erstellen muss dagegen ein Nutzer übergeben werden, damit im Backend sichergestellt werden kann, dass ein Nutzer jede Idee jeweils nur einmal bewerten kann. Beim Versuch, eine Idee zu bewerten, die der angemeldete Nutzer bereits bewertet hat, wird als HTTP-Statuscode ein Fehler zurückgegeben und die Bewertung nicht gespeichert.
 
+## POST vs. PUT
 Die Methoden **POST** und **PUT** werden innerhalb der API einheitlich gemäß der [W3C-Definition](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) verwendet. Das Hinzufügen einer Ressource (Idee, Kommentar, Bewertung) erfolgt über eine andere URL als das spätere Bearbeiten. Dabei wird über die erste URL, die nicht spezifisch auf eine bestimmte Ressource hindeutet, nur die **POST**-Operation zum Hinzufügen verwendet. Die Ressource wird dann unter einer eigenen URL angelegt, die die im Backend generierte ID der Ressource enthält. Über diese kann sie später mit **PUT**-Requests geändert werden. **POST**-Requests auf die Ressourcen-spezifischen URLs sind nicht möglich.
 Da jede Idee jederzeit genau einen Status hat, wird dieser nicht über eine eigene ID identifiziert, sondern über die ID der Idee, zu der der Status gehört. Der Status wird initial beim Anlegen der Idee im Backend gesetzt. Daher kann er über die API lediglich über **PUT**-Requests auf die durch die ID der Idee definierte URL angepasst, nicht aber angelegt (**POST**) werden.
 Wird eine nicht definierte Methode aufgerufen, wird grundsätzlich mit dem HTTP-Statuscode 405 (Method not allowed) geantwortet (siehe auch Tabelle 1: Verwendung der HTTP-Verben).
+
+## Status
+Der Status einer Idee wird als String zurückgegeben, der den Status repräsentiert. Dies wurde entschieden, damit der Status den Benutzern ohne weitere Konvertierung seitens der Frontend-Developer sinnvollerweise als Text statt als ID oder sonstiger Code angezeigt werden kann.
 
 # Unterstützung unterschiedlicher Sprachen (User-Story 10)
 Die Formate der übergebenen Daten usw. richten sich nach der Sprache, in der die Idee angezeigt werden soll. Texte, etwa die Beschreibung der Idee werden dabei nicht automatisch übersetzt. Die verwendeten Formate richten sich dabei automatisch nach der vom Browser bei jedem Request übergebenen Sprachkennung. Soll die Ausgabe in einer anderen Sprache als dieser erfolgen, kann der optionale Sprach-Parameter in der Request-URL gesetzt werden.
@@ -25,17 +33,15 @@ Eine umfassende Gegenüberstellung der verschiedenen HTTP-Verben und deren Verwe
 
 ### Tabelle 1: Verwendung der HTTP-Verben
 |Request-URI                    |  GET                            | POST  	          | PUT  	           | DELETE  	         |
-|---	                        | ---	                          | ---	              | ---	               | ---    	         |
-|/idea  	                    | 405                             |  `siehe Doku (1)` |  405               |  405                |
+|---	                        |---	                          |---	              |---	               |---    	             |
+|/idea  	                    | *Liste aller Ideen*             |  `siehe Doku (1)` |  405               |  405                |
 |/idea/{id} 	                | `siehe Doku (3)`                | 405               | `siehe Doku (4)`   | `siehe Doku (2)`    |
-|/idea/{id}/comment	            | 405                             | `siehe Doku (5)`  |  405               | 405                 |
-|/idea/{id}/comment/{commentId}	| 405                             | 405     	      | *Kommentar ändern* | *Kommentar löschen* |
+|/idea/{id}/comment	            | *Alle Kommentare zu einer Idee* | `siehe Doku (5)`  |  405               | 405                 |
+|/idea/{id}/comment/{commentId}	| *Ein bestimmter Kommentar*      | 405     	      | *Kommentar ändern* | *Kommentar löschen* |
 |/idea/{id}/rating 	            | 405                             | `siehe Doku (6)`  | 405                | 405                 |
 |/idea/{id}/rating/{ratingId}   | 405                             | 405               | *Bewertung ändern* | 405                 |
-|/idea/{id}/status 	            | 405                             | 405               | `siehe Doku (9)`   | 405                 |
-|/ideas                         | *Liste aller Ideen*             | 405               | 405                | 405                 |
+|/idea/{id}/status 	            | 405                             | `siehe Doku (9)`  | 405                | 405                 |
 |/ideas/{userId}	            | `siehe Doku (8)`                | 405               | 405                | 405                 |
-|/signin 	                    | 405                             | *Anmeldung*       | 405                | 405                 |
 |/signup 	                    | 405                             | `siehe Doku (7)`  | 405                | 405                 |
 
 ### Legende
