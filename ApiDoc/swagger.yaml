@@ -80,9 +80,9 @@ paths:
                     description: "Die ID des Nutzers"
                     example: 1
               status:
-                type: integer
-                description: "Die ID des aktuellen Status der Idee"
-                example: 1
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Created"
               numberOfRatings:
                 type: integer
                 minimum: 0
@@ -150,102 +150,102 @@ paths:
       produces:
       - application/json
       responses:
-      200:
-        description: "Die angebene Idee konnte gefunden werden"
-        schema:
-        type: object
-        required:
-        - titel
-        - description
-        - author
-        - status
-        - numberOfRatings
-        - sumOfAllRatings
-        - comments
-        properties:
-        titel:
-          type: string
-          description: "Der Titel dieser Idee"
-          example: "Mehr Kaffe"
-        description:
-          type: string
-          description: "Der Inhalt dieser Idee"
-          example: "Wir brauchen mehr Kaffe in der Küche"
-        author:
-          type: object
-          description: "Der Author dieser Idee"
-          required:
-          - name
-          - password
-          - id
-          properties:
-          name:
-            type: string
-            description: "Der Benutzername des Nutzers"
-            example: "Max Mustermann"
-          password:
-            type: string
-            description: "Das gehashte Passwort des Nutzers"
-            example: "1234"
-          id:
-            type: integer
-            description: "Die ID des Nutzers"
-            example: 1
-          status:
-          type: integer
-          description: "Die ID des aktuellen Status der Idee"
-          example: 2
-          numberOfRatings:
-          type: integer
-          minimum: 0
-          description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
-          example: 12
-          sumOfAllRatings:
-          type: number
-          minimum: 0
-          maximum: 5
-          description: "Die durchschnittliche Bewertung für diese Idee"
-          example: 3.8
-          comments:
-          type: array
-          description: "Ein Array mit allen Kommentaren zu dieser Idee"
-          items:
+        200:
+          description: "Die angebene Idee konnte gefunden werden"
+          schema:
             type: object
             required:
-            - ID
+            - titel
+            - description
             - author
-            - text
+            - status
+            - numberOfRatings
+            - sumOfAllRatings
+            - comments
             properties:
-            ID:
-              type: integer
-              description: "Die ID des Kommentars"
-              example: 1
-            author:
-              type: object
-              description: "Der Author dieser Idee"
-              required:
-              - name
-              - password
-              - id
-              properties:
-              name:
-              type: string
-              description: "Der Benutzername des Nutzers"
-              example: "Max Mustermann"
-              password:
-              type: string
-              description: "Das gehashte Passwort des Nutzers"
-              example: "1234"
-              id:
-              type: integer
-              description: "Die ID des Nutzers"
-              example: 1
-            text:
-              type: string
-              description: "Der Inhalt dieses Kommentars"
-              example: "Ich stimme zu!"
-      404:
-        description: "Die angegebene Idee kann nicht gefunden werden."
+              titel:
+                type: string
+                description: "Der Titel dieser Idee"
+                example: "Mehr Kaffe"
+              description:
+                type: string
+                description: "Der Inhalt dieser Idee"
+                example: "Wir brauchen mehr Kaffe in der Küche"
+              author:
+                type: object
+                description: "Der Author dieser Idee"
+                required:
+                - name
+                - password
+                - id
+                properties:
+                  name:
+                    type: string
+                    description: "Der Benutzername des Nutzers"
+                    example: "Max Mustermann"
+                  password:
+                    type: string
+                    description: "Das gehashte Passwort des Nutzers"
+                    example: "1234"
+                  id:
+                    type: integer
+                    description: "Die ID des Nutzers"
+                    example: 1
+              status:
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Published"
+              numberOfRatings:
+                type: integer
+                minimum: 0
+                description: "Die Anzahl der abgegebenene Bewertung für diese Idee"
+                example: 12
+              sumOfAllRatings:
+                type: number
+                minimum: 0
+                maximum: 5
+                description: "Die durchschnittliche Bewertung für diese Idee"
+                example: 3.8
+              comments:
+                type: array
+                description: "Ein Array mit allen Kommentaren zu dieser Idee"
+                items:
+                  type: object
+                  required:
+                  - ID
+                  - author
+                  - text
+                  properties:
+                    ID:
+                      type: integer
+                      description: "Die ID des Kommentars"
+                      example: 1
+                    author:
+                      type: object
+                      description: "Der Author dieser Idee"
+                      required:
+                      - name
+                      - password
+                      - id
+                      properties:
+                        name:
+                          type: string
+                          description: "Der Benutzername des Nutzers"
+                          example: "Max Mustermann"
+                        password:
+                          type: string
+                          description: "Das gehashte Passwort des Nutzers"
+                          example: "1234"
+                        id:
+                          type: integer
+                          description: "Die ID des Nutzers"
+                          example: 1
+                    text:
+                      type: string
+                      description: "Der Inhalt dieses Kommentars"
+                      example: "Ich stimme zu!"
+        404:  
+          description: "Die angegebene Idee kann nicht gefunden werden."
     put:
       summary: "4 Ändern einer zuvor eingetragenen Idee"
       operationId: update
@@ -263,7 +263,7 @@ paths:
         required: true
         description: "Die Veränderungen an der Idee"
         schema: 
-        type: object
+          type: object
           properties:
             title:
               type: string
@@ -324,9 +324,9 @@ paths:
                     description: "Die ID des Nutzers"
                     example: 1
               status:
-                type: integer
-                description: "Die ID des aktuellen Status der Idee"
-                example: 2
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Published"
               numberOfRatings:
                 type: integer
                 minimum: 0
@@ -414,7 +414,7 @@ paths:
         404:
           description: "Die angegebene Idee kann nicht gefunden werden."
   /idea/{id}/comment:
-    put:
+    post:
       summary: "5 Eintragen eines Kommentars zu einer Idee"
       operationId: create comment
       description: "Der Kommentar wird gespeichert und mit der Idee mit der angegebenen ID verbunden. Er bekommt eine ID zugeordnet und sein Eintrag wird auch in der Historie der Idee vermerkt."
@@ -485,9 +485,9 @@ paths:
                     description: "Die ID des Nutzers"
                     example: 1
               status:
-                type: integer
-                description: "Die ID des aktuellen Status der Idee"
-                example: 2
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Published"
               numberOfRatings:
                 type: integer
                 minimum: 0
@@ -614,9 +614,9 @@ paths:
                     description: "Die ID des Nutzers"
                     example: 1
               status:
-                type: integer
-                description: "Die ID des aktuellen Status der Idee"
-                example: 2
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Published"
               numberOfRatings:
                 type: integer
                 minimum: 0
@@ -692,7 +692,7 @@ paths:
         schema:
           type: integer
           description: "Die ID des Status"
-          example: 
+          example: "Published"
       - in: query
         name: lang
         required: false
@@ -744,9 +744,9 @@ paths:
                     description: "Die ID des Nutzers"
                     example: 1
               status:
-                type: integer
-                description: "Die ID des aktuellen Status der Idee"
-                example: 2
+                type: string
+                description: "Der aktuelle Status der Idee"
+                example: "Published"
               numberOfRatings:
                 type: integer
                 minimum: 0
@@ -871,9 +871,9 @@ paths:
                           description: "Die ID des Nutzers"
                           example: 1
                     status:
-                      type: integer
-                      description: "Die ID des aktuellen Status der Idee"
-                      example: 2
+                      type: string
+                      description: "Der aktuelle Status der Idee"
+                      example: "Published"
                     numberOfRatings:
                       type: integer
                       minimum: 0
